@@ -1,0 +1,48 @@
+# ============================================================
+# Game Price ETL Pipeline — Dependencies
+# ============================================================
+# Install: pip install -r requirements.txt
+#
+# Catatan Aiven PostgreSQL:
+#   Set DATABASE_URL=postgresql://user:pass@host:port/dbname
+#   di .env sebelum menjalankan pipeline
+
+# ── Web Scraping & HTTP ──────────────────────────────────────
+requests>=2.31.0
+beautifulsoup4>=4.12.0
+lxml>=4.9.0
+fake-useragent>=1.4.0
+tenacity>=8.2.0
+
+# ── Data Processing ──────────────────────────────────────────
+pandas>=2.0.0
+numpy>=1.26.0
+pyarrow>=14.0.0          # Parquet support
+openpyxl>=3.1.0          # Excel export
+
+# ── Database ─────────────────────────────────────────────────
+sqlalchemy>=2.0.0
+psycopg2-binary>=2.9.0   # PostgreSQL (Aiven) — opsional
+
+# ── Machine Learning ─────────────────────────────────────────
+scikit-learn>=1.3.0
+xgboost>=2.0.0
+joblib>=1.3.0
+
+# ── Visualisasi & BI ─────────────────────────────────────────
+streamlit>=1.58.0
+matplotlib>=3.8.0
+seaborn>=0.13.0
+plotly>=5.18.0
+
+# ── Workflow Orchestration ───────────────────────────────────
+apache-airflow>=2.8.0    # Untuk DAG orchestration
+
+# ── Utilities ────────────────────────────────────────────────
+loguru>=0.7.0
+python-dotenv>=1.0.0
+tqdm>=4.66.0
+
+# ── Testing ──────────────────────────────────────────────────
+pytest>=7.4.0
+pytest-cov>=4.1.0

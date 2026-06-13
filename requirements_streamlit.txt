@@ -1,0 +1,28 @@
+# ============================================================
+# Streamlit Cloud — Slim Dependencies
+# ============================================================
+# Hanya library yang diperlukan untuk menjalankan Streamlit app.
+# Tidak termasuk: apache-airflow, beautifulsoup4, fake-useragent,
+# tenacity, lxml (hanya untuk ETL pipeline, bukan dashboard).
+
+# ── Data Processing ──────────────────────────────────────────
+pandas>=2.0.0
+numpy>=1.26.0
+pyarrow>=14.0.0
+
+# ── Database ─────────────────────────────────────────────────
+sqlalchemy>=2.0.0
+psycopg2-binary>=2.9.0
+
+# ── Machine Learning ─────────────────────────────────────────
+scikit-learn>=1.3.0
+xgboost>=2.0.0
+joblib>=1.3.0
+
+# ── Visualisasi & BI ─────────────────────────────────────────
+streamlit>=1.58.0
+plotly>=5.18.0
+
+# ── Utilities ────────────────────────────────────────────────
+loguru>=0.7.0
+python-dotenv>=1.0.0
