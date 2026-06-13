@@ -134,23 +134,41 @@ def load_data():
         
         # Test koneksi
         with engine.connect() as conn:
-            conn.execute(text("SELECT 1"))
+            result = conn.execute(text("""
+                SELECT table_name
+                FROM information_schema.tables
+                WHERE table_schema='public'
+            """))
+
+            tables = [r[0] for r in result]
+            st.write(tables)
         
+        st.write(DB_URL.split("@")[-1])
+
         logger.info("✅ Database connection successful — loading from Aiven PostgreSQL")
         st.info("📊 Data dimuat dari **Aiven PostgreSQL**", icon="✅")
         
+        logger.info("Loading dim_game")
+        game = pd.read_sql("SELECT * FROM dim_game", engine)
+
+        logger.info("Loading fact_pricing")
+        pricing = pd.read_sql("SELECT * FROM fact_pricing", engine)
+
+        logger.info("Loading dim_age")
+        age = pd.read_sql("SELECT * FROM dim_age", engine)
         return {
-            "game":    pd.read_sql("SELECT * FROM dim_game", engine),
-            "pricing": pd.read_sql("SELECT * FROM fact_pricing", engine),
-            "age":     pd.read_sql("SELECT * FROM dim_age", engine),
+            "game":    game,
+            "pricing": pricing,
+            "age":     age,
             "comp":    pd.read_sql("SELECT * FROM fact_competition", engine),
             "revenue": pd.read_sql("SELECT * FROM fact_revenue_monthly", engine),
             "ml":      pd.read_sql("SELECT * FROM ml_features", engine),
         }
     
     except Exception as exc:
-        logger.warning("Database unavailable ({}), falling back to local CSV", type(exc).__name__)
+        st.error(f"{type(exc).__name__}: {exc}")
         st.warning(f"⚠️  Aiven DB gagal — menggunakan **CSV lokal** (mungkin data tidak ter-sync)", icon="⚠️")
+        raise
         
         try:
             return {
